@@ -1,7 +1,8 @@
 import random
 import math
 import numpy as np
-
+import nltk
+from preprocessing import preprocess
 # Assume that we are getting the context vector from encoders.
 # Encoder encodes sentences in one language (generates context vector)
 # Decoder decodes sentences in another language (consumes context vector)
@@ -9,30 +10,36 @@ import numpy as np
 # PROCEDURE -
 # ---------
 # 1). Stack of encoders, release one context vector, that is used in decoder in every time step.
-# 2). The lowest encoder gets the embedding of each word in a sentence in a (number_of_words, vocab_len)
-#       format. The number of words change after every translation
+# 2). The lowest encoder gets the embedding of each word in a sentence in a (num_of_words, embedding_len)
+#       format. The number of words change after full front traversal.
 #
-# ADVANTANGES -
-# -----------
-# 1). This way we can design, build and test the ENCODER and DECODER separately for the
-#       "figuring out" the same task. They are connected later via the use of context vector.
-# 2). They are allowed to use the same computing resources as they can be run independently.
+# The models are used for making a probability distribution on the complete vocabulary for a single full-pass
+# through the decoder.
 #
+# Fully-connected networks are run independent of each other. They are multilayer perceptron.
+# The output is a vector of vectors that has dimension same as the input ie, (num_of_words, embedding_len).
 #
-# DISADVANTAGES - 
-# -------------
-# 1). More novel ways are needed to be searched for sincec not every architecture support
-#       such a "complete-context-vector-handing-over" behavior.
-# 2). How multi-modality models are incorporated in such a framework of building encoder-decoder
-#       architectures.
-#
-# The models are used for making a probability distribution on the complete vocabulary for this text.
 # This context vector is used in a downstream task to figure out the next word.
 #   
 # In the case of multiple docs, combine the 
 
-len_text = 10
-len_vocab = 5
+embedding_len = 50
+vocab_len = 500
+# 1 - then alright that word in there in the sentence.
+# 0 - that word is not in the sentence.
+def preprocess_text(raw_text):
+    tokens = preprocess(raw_text) #[docs, sents, words]
+    return tokens
+
+text = [[[i for i in range(embedding_len)] for _ in num_words] for _ in num_sents]
+sents = []
+for sent in text:
+    
+
+def determine_vocab_len(raw_text):
+    '''Determine the useful words in the complete collection of documents.
+    '''
+    pass
 
 context = [random.randint(1, 5) / 10 for _ in range(len_text * len_vocab)]
 context = np.array(context).reverse(len_text, len_vocab)
