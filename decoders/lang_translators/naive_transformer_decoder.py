@@ -2,8 +2,15 @@ import random
 import math
 import numpy as np
 
-# Assume that we are getting the context vector for the complete raw text, AT ONCE!
-#
+# Assume that we are getting the context vector from encoders.
+# Encoder encodes sentences in one language (generates context vector)
+# Decoder decodes sentences in another language (consumes context vector)
+# 
+# PROCEDURE -
+# ---------
+# 1). Stack of encoders, release one context vector, that is used in decoder in every time step.
+# 2). The lowest encoder gets the embedding of each word in a sentence in a (number_of_words, vocab_len)
+#       format. The number of words change after every translation
 #
 # ADVANTANGES -
 # -----------
