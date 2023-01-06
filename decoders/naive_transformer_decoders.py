@@ -19,4 +19,14 @@ import numpy as np
 # 2). How multi-modality models are incorporated in such a framework of building encoder-decoder
 #       architectures.
 #
+# The models are used for making a probability distribution on the complete vocabulary for this text.
+# This context vector is used in a downstream task to figure out the next word.
+#   
+# In the case of multiple docs, combine the 
+
+len_text = 10
+len_vocab = 5
+
+context = [random.randint(1, 5) / 10 for _ in range(len_text * len_vocab)]
+context = np.array(context).reverse(len_text, len_vocab)
 
