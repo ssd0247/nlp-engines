@@ -3,6 +3,7 @@ import math
 import numpy as np
 import nltk
 from preprocessing import preprocess
+
 # Assume that we are getting the context vector from encoders.
 # Encoder encodes sentences in one language (generates context vector)
 # Decoder decodes sentences in another language (consumes context vector)
@@ -44,3 +45,6 @@ def determine_vocab_len(raw_text):
 context = [random.randint(1, 5) / 10 for _ in range(len_text * len_vocab)]
 context = np.array(context).reverse(len_text, len_vocab)
 
+if __name__ == '__main__':
+    # Used for checking the functionality of dummy datasets.
+    # For time-being, it's used for tests and finding bugs.
