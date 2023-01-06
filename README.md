@@ -10,4 +10,4 @@
 
     - Natural Language Generation (NLG); How can we predict any target word, given a certain context.
 
-    - Neural Machine Translation; Using neural networks to learn the concise, intermediate representation of the original text, to decode the maximum information related to the task.
+    - Neural Machine Translation; Using neural networks to learn the concise, intermediate representation of the original text, more the task related information encoded in it, better the decoder's output.
