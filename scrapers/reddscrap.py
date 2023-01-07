@@ -35,3 +35,5 @@ topics = [topic_div.find("a", {"class": "title may-blank"}).text for topic_div i
 comment_data = [soup.find("div", {"class": "md"}).p.text for soup in soups]
 # zip the question/heading with the underlying comments and data
 zipped_data = list(zip(topics, comment_data))
+
+assert len(zipped_data) == len(topics)
