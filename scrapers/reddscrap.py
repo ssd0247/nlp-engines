@@ -20,10 +20,18 @@ soup = bsoup(page.text, 'lxml')
 top_matter = soup.find_all("div", attrs={"class": "top-matter"})
 # all further approachable urls
 all_urls = [
-    quote(base_url + outer_container.find("a", attrs={"class": "title may-blank"})["href"], safe=":/?&") \
+    quote(base_url + outer_container.find("a", {"class": "title may-blank"})["href"], safe=":/?&") \
         for outer_container in top_matter if outer_container.find("a", attrs={"class": "title may-blank"})]
 # We get some extra urls using the strategy used above, collect all comments
 comments = [url for url in all_urls if "https://old.reddit.com/r/datascience" in url]
 
 # Make request for each url
 soups = [bsoup(requests.get(url, headers=headers).text, 'lxml') for url in comments]
+
+# Collect topics
+topic_divs = [soup.find("div", {"id": "siteTable", "class": "sitetable linklisting"}) for soup in soups]
+topics = [topic_div.find("a", {"class": "title may-blank"}).text for topic_div in topic_divs]
+# now extract data
+comment_data = [soup.find("div", {"class": "md"}).p.text for soup in soups]
+# zip the question/heading with the underlying comments and data
+zipped_data = list(zip(topics, comment_data))
