@@ -18,7 +18,8 @@ domains = soup.find_all("span", class_="domain")
 
 soup.find_all("span", {"class": "domain", "height": "100px"})
 
-for domain in domains:
-    if domain != "(self.datascience)":
-        continue
-    print(domain.text)
+#for domain in domains:
+#    if domain != "(self.datascience)":
+#        continue
+#    print(domain.text)
+
