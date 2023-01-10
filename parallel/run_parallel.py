@@ -148,8 +148,8 @@ if __name__ == '__main__':
     pipeline_new = queue.Queue()
     event = threading.Event()
     with cf.ThreadPoolExecutor(max_workers=2) as executor:
-        executor.submit(producer, pipeline, event)
-        executor.submit(consumer, pipeline, event)
+        executor.submit(producer_queue, pipeline_new, event)
+        executor.submit(consumer_queue, pipeline_new, event)
 
         time.sleep(0.1)
         logging.info("Main: about to set event")
