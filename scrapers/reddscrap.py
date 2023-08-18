@@ -6,9 +6,9 @@ url = r"https://old.reddit.com/r/datascience"
 base_url = r"https://old.reddit.com"
 # Headers to mimic a browser visit
 headers = {
-    'User-Agent': r'Mozilla/5.0 (Windows NT 10.0; Win64; x64) \
+    'User-Agent': ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) \
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 \
-            Safari/537.36'
+            Safari/537.36').lstrip()
 }
 # sanitize urls
 url = quote(url, safe=":/?&")
