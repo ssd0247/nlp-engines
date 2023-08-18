@@ -26,13 +26,22 @@ all_urls = [
 comments = [url for url in all_urls if "https://old.reddit.com/r/datascience" in url]
 
 # Make request for each url
+
+# XXX: Takes a lot of time when run sequentially :
+# - (1) Segregate networking (I/O) and html-parsing (CPU) as different tasks.
+# - (2) Utilize threads for networking (low resource consumption).
+# - (3) Utilize multi-core processes for html-parsing (high resource consumption)
+# - (4) Use Queues to pass on the fetched HTML pages over to parsing.
+# NOTE: While making multiple concurrent requests, respect the rate-limit.
+#       DON'T BOMBARD THE SERVER, MAY UNNECESSARILY LOOK LIKE A HACKER.
+
 soups = [bsoup(requests.get(url, headers=headers).text, 'lxml') for url in comments]
 
 # Collect topics
 topic_divs = [soup.find("div", {"id": "siteTable", "class": "sitetable linklisting"}) for soup in soups]
 topics = [topic_div.find("a", {"class": "title may-blank"}).text for topic_div in topic_divs]
 # now extract data
-comment_data = [soup.find("div", {"class": "md"}).p.text for soup in soups]
+comment_data = [soup.find("div", {"class": "commentarea"}).p.text for soup in soups]
 # zip the question/heading with the underlying comments and data
 zipped_data = list(zip(topics, comment_data))
 
