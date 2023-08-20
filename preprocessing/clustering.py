@@ -3,8 +3,6 @@ import math
 import numpy as np
 from sklearn.datasets import make_blobs
 
-K_GRPS = 5
-
 def _check_types(v1, v2):
     if isinstance(v1, (list, tuple)):
         if isinstance(v2, (list, tuple)):
@@ -40,18 +38,22 @@ def fill_groups(grps, centroids, X):
     
     return grps
 
-if __name__ == '__main__':
-    X, y = make_blobs(
-        n_samples=500,
-        n_features=10,
-        centers=K_GRPS,
-        cluster_std=0.5,
-        shuffle=True,
-        random_state=123)
-
-    initial_centroids = X[:K_GRPS]
-    X_rest = X[K_GRPS:]
-    groups = {key: [] for key in range(K_GRPS)}
+def run(k, n_samples=500, n_features=10, cluster_std=0.5, shuffle=True, random_state=1):
+    # don't need y's for unsupervised learning in k-means clustering (a prototype-based grouping method)
+    X, _ = make_blobs(n_samples=n_samples, n_features=n_features, centers=k, cluster_std=cluster_std, shuffle=shuffle, random_state=random_state)
+    initial_centroids = X[:k]
+    X_rest = X[k:]
+    
+    groups = {key: [initial_centroids[key]] for key in range(k)}
     groups = fill_groups(groups, initial_centroids, X_rest)
-    for val in groups.values():
-        print(len(val))
+    
+    for i, val in enumerate(groups.values()):
+        print(f"Number of elements in group {i}: {len(val)}")
+    
+    print("*" * 50)
+    return
+
+if __name__ == '__main__':
+    Ks = [2, 3, 4, 5, 6, 7, 8]
+    for k in Ks:
+        run(k, random_state=123)
