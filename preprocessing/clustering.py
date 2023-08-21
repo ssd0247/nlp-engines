@@ -45,10 +45,40 @@ def distance(v1, v2):
         return abs(v1 - v2)
     raise TypeError("types of args not supported yet!")
 
-def _initialize_grps(X, k):
-    initial_centroids = X[:k]
-    X_rest = X[k:]
-    
+def _initialize_grps(X: np.ndarray, k, method='random'):
+    X_rest = X.copy()
+    initial_centroids = []
+
+    if method.lower() == 'random':
+        idxs = []
+        while len(initial_centroids) < k:
+            sample_idx = np.random.choice(range(0, X.shape[0], 1))
+            if sample_idx in idxs:
+                continue
+            idxs.append(sample_idx)
+            initial_centroids.append(X[sample_idx])
+        X_rest = np.delete(X_rest, idxs, axis=0)
+
+    elif method.lower() == 'kmeans++':
+        sample_idx = np.random.choice(range(0, X.shape[0], 1))
+        initial_centroids.append(X[sample_idx])
+        idx_to_delete = sample_idx
+        X_rest = np.delete(X_rest, idx_to_delete, axis=0)
+        while len(initial_centroids) < k:
+            sample_distances = []
+            for sample in X_rest:
+                sample_distances.append((sample, None))
+                min_d = float('inf')
+                for cent in initial_centroids:
+                    dist = distance(sample, cent)
+                    if min_d > dist:
+                        min_d = dist
+                sample_distances[-1][1] = min_d
+            choosen_sample_tuple = max(sample_distances, key=lambda tup: tup[1])
+            initial_centroids.append(choosen_sample_tuple[0])
+            idx_to_delete = sample_distances.index(choosen_sample_tuple)
+            X_rest = np.delete(X_rest, idx_to_delete, axis=0)
+
     groups = {key: [initial_centroids[key]] for key in range(k)}
     groups = fill_groups(initial_centroids, X_rest, grps=groups)
     return groups
