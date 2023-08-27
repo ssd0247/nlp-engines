@@ -45,3 +45,8 @@
 Hypothesis : This algorithm shouldn't require typical preprocessing step involving `REMOVING STOPWORDS`. SPAM docs give low magnitude negative TF-IDF scores to STOPWORDS (like close to 0 from -ve side) and NOT-SPAM docs give low magnitude positive TF-IDF scores to STOPWORDS (like close to 0 from +ve side).
 
 So when applying algorithm to a new email: that is, using the dictionaries formed --> WEIGHTS OF INDIVIDUAL STOPWORDS MORE OR LESS CANCELS EACH OTHER OUT!
+
+Testing Hypothesis : Build vocabulary via two approaches
+(1) Without removing STOPWORDS
+(2) After removing STOPWORDS
+Compare the accuracy of classifying new emails into SPAM/NOT-SPAM in both the above cases. If it's same upto a desired tolerance, then hypothesis holds, else reject.
