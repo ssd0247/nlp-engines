@@ -6,6 +6,7 @@ import nltk
 
 import numpy as np
 import pandas as pd
+
 from sklearn.model_selection import train_test_split
 
 REQ_STARTING_CHARS = set(string.ascii_lowercase + string.digits)
@@ -82,10 +83,10 @@ def set_idf(vocabs: list[dict], total_docs):
 
     return vocabs
 
-def validation_run(test_df, *vocabs):
+def validation_run(test_df, *vocabs, remove_stops=True):
     test_txt = get_text(test_df.loc[:, "text"])
     correct_labels = test_df.loc[:, "label"]
-    test_vocabs = get_vocabs(test_txt, remove_stops=True)
+    test_vocabs = get_vocabs(test_txt, remove_stops=remove_stops)
 
     spam_voc, ham_voc = vocabs
 
@@ -147,12 +148,18 @@ if __name__ == '__main__':
     parser.add_argument(
         "-t",  "--train_size", default=0.8, type=float,
         help="(Optional Argument): Provide the train size for split. Default = 0.8",
-        nargs="?", required=False)
+        nargs="?")
+    
+    parser.add_argument(
+        "-r", "--remove_stopwords", default=True, type=bool,
+        help="(Optional Argument): Provide the boolean flag; 'True' to remove stopwords, 'False' otherwise",
+        nargs="?")
     
     args = parser.parse_args()
     
     TRAIN_SIZE = args.train_size
     DATA_PATH = args.path
+    REMOVE_STOPWORDS = args.remove_stopwords
 
     train_df, test_df = load_data(DATA_PATH, TRAIN_SIZE)
 
@@ -164,8 +171,8 @@ if __name__ == '__main__':
 
     is_dataset_balanced(spam_text, ham_text)
     
-    spam_vocabs = get_vocabs(spam_text, remove_stops=True)
-    ham_vocabs = get_vocabs(ham_text, remove_stops=True)
+    spam_vocabs = get_vocabs(spam_text, remove_stops=REMOVE_STOPWORDS)
+    ham_vocabs = get_vocabs(ham_text, remove_stops=REMOVE_STOPWORDS)
 
     spam_vocabs = set_idf(spam_vocabs, len(spam_vocabs))
     ham_vocabs = set_idf(ham_vocabs, len(ham_vocabs))
@@ -178,5 +185,5 @@ if __name__ == '__main__':
             vocab[key] *= -1
     
     # Now utilize test data (test_df)
-    acc = validation_run(test_df, spam_vocabs, ham_vocabs)
+    acc = validation_run(test_df, spam_vocabs, ham_vocabs, remove_stops=REMOVE_STOPWORDS)
     print(f"Accuracy of the TF-IDF based model : {acc * 100} %")
