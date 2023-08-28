@@ -4,7 +4,7 @@
 
 - These algorithms *may* build a very **crude model**, the genesis of which don't involve any kind of `learning` (in a sense we generally associate with machine learning models). For example:
 
-    * [spam_filtering.py](https://www.github.com/ssd0247/nlp-engines/data-mining/spam_filtering.py) contains a <u>*unique dictionary for a single document(email) containing all the words from the vocabulary with their corresponding counts*</u>.
+    * [spam_filtering.py](https://github.com/ssd0247/nlp-engines/blob/main/data-mining/spam_filtering.py) contains a *unique dictionary for a single document(email) containing all the words from the vocabulary with their corresponding counts*.
 
 ## ALGORITHMS:
 
@@ -18,7 +18,7 @@
 
 3. Find out the vocabulary of that doc. Use `set()` data structure in Python to get a collection of unique words in that doc.
 
-4. Build a count dictionary (utilizing `dict() OR Counter() from 'collections' std module`) with keys(== words of the set built above) and values(== counts term-frequencies {TF} of these words in the current doc).
+4. Build a count dictionary (utilizing `dict() OR Counter() from 'collections' std library module`) with keys(== words of the set built above) and values(== counts term-frequencies {TF} of these words in the current doc).
 
 5. Do the same for all docs. (can be parallelized!)
 
