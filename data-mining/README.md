@@ -38,6 +38,8 @@
 
 8. Repeat steps (2) to (7) for `NOT-SPAM` category emails.
 
+**This simple algorithm achieves an accuracy of ~80% on the task for filtering spam emails. WITHOUT USING ANY FORM OF MACHINE LEARNING / AI - BASED ALGORITHM**
+
 > Assign **negative** values to weights when dealing with SPAM docs and **positive** values to weights when dealing with NOT-SPAM docs.
 
 > NOTE BELOW ->
