@@ -4,11 +4,11 @@
 
 - These algorithms *may* build a very **crude model**, the genesis of which don't involve any kind of `learning` (in a sense we generally associate with machine learning models). For example:
 
-    * [spam_filtering.py](https://github.com/ssd0247/nlp-engines/blob/main/data-mining/spam_filtering.py) contains a *unique dictionary for a single document(email) containing all the words from the vocabulary with their corresponding counts*.
+    * [spam_classifier.py](https://github.com/ssd0247/nlp-engines/blob/main/data-mining/spam_filtering.py) contains a *unique dictionary for a single document(email) containing all the words from the vocabulary with their corresponding counts*.
 
 ## ALGORITHMS:
 
-### SPAM-FILTERING
+### SPAM CLASSIFICATION
 
 > Premise : We have a dataset containing a total of `N` email subject & body in string datatype format (UTF-8). Each such text is also assigned a label of the form `SPAM` vs `NOT-SPAM`. First thing done is concatenate the subject with the body of the email, so that we have a single long piece of textual data.
 
@@ -46,7 +46,7 @@
 
 Hypothesis : This algorithm shouldn't require typical preprocessing step involving `REMOVING STOPWORDS`. SPAM docs give low magnitude negative TF-IDF scores to STOPWORDS (like close to 0 from -ve side) and NOT-SPAM docs give low magnitude positive TF-IDF scores to STOPWORDS (like close to 0 from +ve side).
 
-So when applying algorithm to a new email: that is, using the dictionaries formed --> WEIGHTS OF INDIVIDUAL STOPWORDS MORE OR LESS CANCELS EACH OTHER OUT!
+So when applying algorithm to a new email: that is, using the dictionaries formed --> ***WEIGHTS OF INDIVIDUAL STOPWORDS MORE OR LESS CANCELS EACH OTHER OUT!***
 
 Testing Hypothesis : Build vocabulary via two approaches
 (1) Without removing STOPWORDS
