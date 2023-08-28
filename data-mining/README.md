@@ -4,7 +4,7 @@
 
 - These algorithms *may* build a very **crude model**, the genesis of which don't involve any kind of `learning` (in a sense we generally associate with machine learning models). For example:
 
-    * [spam_filtering.py](https://www.github.com/ssd0247/nlp-engines/data-mining/spam_filtering.py) contains a <u>*unique dictionary for a single document(email)containing all the words from the vocabulary with their corresponding counts*</u>.
+    * [spam_filtering.py](https://www.github.com/ssd0247/nlp-engines/data-mining/spam_filtering.py) contains a <u>*unique dictionary for a single document(email) containing all the words from the vocabulary with their corresponding counts*</u>.
 
 ## ALGORITHMS:
 
